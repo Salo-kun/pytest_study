@@ -18,3 +18,7 @@ class ProductPageLocators():
     ADD_TO_CART_MESSAGE = (By.CSS_SELECTOR, "#messages>div:nth-child(1)>div")
     TOTAL_BUSKET = (By.CSS_SELECTOR, "#messages>div.alert>div>p:nth-child(1)>strong")
     
+
+class BasePageLocators():
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
