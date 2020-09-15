@@ -17,8 +17,7 @@ link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
                                   pytest.param("http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7", marks=pytest.mark.xfail),
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"])
-
-def  test_guest_can_add_product_to_cart(browser, link):
+def  test_guest_can_add_product_to_basket(browser, link):
     page = ProductPage(browser, link)
     page.open()
     page.add_to_cart()
@@ -71,3 +70,31 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     basket_page = BasketPage(browser, browser.current_url, timeout=0)
     basket_page.no_products_in_cart()
     basket_page.cart_is_empty()
+
+@pytest.mark.basket
+class TestUserAddToBasketFromProductPage():
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        page = LoginPage(browser, 'http://selenium1py.pythonanywhere.com/accounts/login/')
+        page.open()
+        email = str(time.time()) + "@fakemail.org"
+        password = 'Q!W@E#R$t5y6u7i8'
+        page.register_new_user(email, password)
+        page.should_be_authorized_user()
+        
+
+    def test_user_cant_see_success_message(self, browser):
+        page = ProductPage(browser, link, timeout=0)
+        page.open()
+        page.should_not_be_success_message()   
+
+
+    def  test_user_can_add_product_to_basket(self, browser):
+        page = ProductPage(browser, link)
+        page.open()
+        page.add_to_cart()
+        page.check_product_added_to_cart_message()
+        page.check_product_name_added_to_cart()
+        page.check_price_added_to_cart()
+
+ 
