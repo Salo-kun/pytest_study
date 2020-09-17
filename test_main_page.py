@@ -1,7 +1,7 @@
 import pytest
 from pages.main_page import MainPage
 from pages.login_page import LoginPage
-from pages.basket_page import BasketPage
+from pages.cart_page import CartPage
 
 link = "http://selenium1py.pythonanywhere.com/"
 
@@ -21,10 +21,10 @@ class TestLoginFromMainPage():
         page.should_be_login_link()
 
 
-def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
+def test_guest_cant_see_product_in_cart_opened_from_main_page(browser):
     page = MainPage(browser, link, timeout=0)
     page.open()
     page.go_to_cart_page()
-    basket_page = BasketPage(browser, browser.current_url, timeout=0)
-    basket_page.no_products_in_cart()
-    basket_page.cart_is_empty()
+    cart_page = CartPage(browser, browser.current_url, timeout=0)
+    cart_page.no_products_in_cart()
+    cart_page.cart_is_empty()
